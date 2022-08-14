@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-8a_m8gm5g$%eo0_r0s--o6&@^dwuu*80hnz2qo8kctoxg0hf**
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = "movies.User"
 
 
 # Application definition

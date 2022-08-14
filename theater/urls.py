@@ -18,10 +18,14 @@ from django.urls import path
 from movies import views as movie_views
 from shared import views as shared_views
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/", shared_views.home, name="home"),
     path("movies/", movie_views.get_movies, name="movie-list"),
     path("movies/<int:movie_id>/", movie_views.get_movie, name="movie-detail"),
     path("movies/add", movie_views.create_movie, name="create-movie"),
+    path("register/", movie_views.register_user, name="register"),
+    path("login/", movie_views.login_user, name="login"),
+    path("logout/", movie_views.logout_user, name="logout"),
 ]

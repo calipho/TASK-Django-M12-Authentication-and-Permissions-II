@@ -44,3 +44,47 @@ def create_movie(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, "create_movie.html", context)
+
+
+def login_user(request: HttpRequest) -> HttpResponse:
+    form = forms.LoginForm()
+    if request.method == "POST":
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password"],
+            )
+            login(request, user)
+            return redirect("home")
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, "login.html", context)
+
+
+def register_user(request: HttpRequest) -> HttpResponse:
+    form = forms.RegistrationForm()
+
+    if request.method == "POST":
+        form = forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            login(request, user)
+            return redirect("home")
+
+    context = {
+        "form": form,
+
+    }
+
+    return render(request, "register.html", context)
+
+
+def logout_user(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    return redirect("home")
